@@ -1,23 +1,6 @@
-/* NetworkDesignForm.css */
-
-:root {
-    --ndf-bg: #f5f7fb;
-    --ndf-card: #ffffff;
-    --ndf-border: #e2e8f0;
-    --ndf-border-strong: #cbd5e1;
-    --ndf-text: #1e293b;
-    --ndf-text-muted: #64748b;
-    --ndf-primary: #2563eb;
-    --ndf-primary-hover: #1d4ed8;
-    --ndf-error: #dc2626;
-    --ndf-error-bg: #fef2f2;
-    --ndf-error-border: #fecaca;
-    --ndf-radius: 10px;
-    --ndf-radius-sm: 6px;
-    --ndf-shadow: 0 1px 3px rgba(15, 23, 42, 0.06),
-        0 1px 2px rgba(15, 23, 42, 0.04);
-    --ndf-shadow-lg: 0 4px 16px rgba(15, 23, 42, 0.08);
-}
+/* NetworkDesignForm.css — стили страницы «Проектирование компьютерной сети».
+   Общие элементы (карточки, кнопки, поля, таблицы, ошибки) вынесены
+   в UI-кит: src/components/ui/ui.css */
 
 .ndf {
     max-width: 1100px;
@@ -25,10 +8,10 @@
     padding: 32px 20px 64px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Helvetica Neue", Arial, sans-serif;
-    color: var(--ndf-text);
+    color: var(--ui-text);
     font-size: 15px;
     line-height: 1.5;
-    background: var(--ndf-bg);
+    background: var(--ui-bg);
     min-height: 100vh;
     box-sizing: border-box;
 }
@@ -37,238 +20,6 @@
 .ndf *::before,
 .ndf *::after {
     box-sizing: border-box;
-}
-
-/* ---------- Шапка ---------- */
-
-.ndf__header {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    margin-bottom: 24px;
-}
-
-.ndf__header h1 {
-    margin: 0 0 6px;
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-}
-
-.subtitle {
-    margin: 0;
-    color: var(--ndf-text-muted);
-    font-size: 14px;
-}
-
-/* ---------- Карточки ---------- */
-
-.card {
-    background: var(--ndf-card);
-    border: 1px solid var(--ndf-border);
-    border-radius: var(--ndf-radius);
-    box-shadow: var(--ndf-shadow);
-    padding: 20px 22px 22px;
-    margin-bottom: 20px;
-}
-
-.card h2 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 0 16px;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-}
-
-.card__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-}
-
-.card__head h2 {
-    margin: 0;
-}
-
-.num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--ndf-primary);
-    color: #fff;
-    font-size: 13px;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-/* ---------- Поля ---------- */
-
-.field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.field > span {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ndf-text-muted);
-}
-
-.field--inline {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
-
-.field--inline > span {
-    white-space: nowrap;
-}
-
-.field--note p {
-    margin: 0;
-}
-
-.grid {
-    display: grid;
-    gap: 16px;
-}
-
-.grid--narrow {
-    grid-template-columns: 200px 1fr;
-    align-items: start;
-}
-
-.hint {
-    margin: 6px 0 14px;
-    font-size: 13px;
-    color: var(--ndf-text-muted);
-}
-
-/* ---------- Inputs / Select ---------- */
-
-.ndf input[type="text"],
-.ndf input[type="number"],
-.ndf select {
-    width: 100%;
-    padding: 8px 10px;
-    font: inherit;
-    font-size: 14px;
-    color: var(--ndf-text);
-    background: #fff;
-    border: 1px solid var(--ndf-border-strong);
-    border-radius: var(--ndf-radius-sm);
-    outline: none;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    min-width: 0;
-}
-
-.ndf select {
-    width: auto;
-    min-width: 140px;
-    cursor: pointer;
-}
-
-.ndf input[type="number"] {
-    -moz-appearance: textfield;
-}
-
-.ndf input[type="number"]::-webkit-outer-spin-button,
-.ndf input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.ndf input:focus,
-.ndf select:focus {
-    border-color: var(--ndf-primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-.ndf input.error,
-.ndf select.error {
-    border-color: var(--ndf-error);
-    background: var(--ndf-error-bg);
-}
-
-.ndf input.error:focus {
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
-}
-
-.ndf input::placeholder {
-    color: #94a3b8;
-}
-
-/* ---------- Таблицы ---------- */
-
-.table-wrap {
-    width: 100%;
-    overflow-x: auto;
-    border: 1px solid var(--ndf-border);
-    border-radius: var(--ndf-radius-sm);
-    background: #fff;
-}
-
-.ndf table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-}
-
-.ndf thead th {
-    text-align: left;
-    padding: 10px 12px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--ndf-text-muted);
-    background: #f8fafc;
-    border-bottom: 1px solid var(--ndf-border);
-    white-space: nowrap;
-}
-
-.ndf tbody td {
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--ndf-border);
-    vertical-align: top;
-}
-
-.ndf tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.ndf tbody tr:hover {
-    background: #fafbfe;
-}
-
-.col-idx {
-    width: 48px;
-}
-
-.col-sm {
-    width: 170px;
-}
-
-.col-act {
-    width: 52px;
-    text-align: center;
-}
-
-.idx {
-    color: var(--ndf-text-muted);
-    font-variant-numeric: tabular-nums;
-    padding-top: 18px !important;
-    text-align: center;
 }
 
 /* ---------- Матрица трафика ---------- */
@@ -283,7 +34,7 @@ table.matrix th.matrix__head {
     font-weight: 600;
     text-transform: none;
     letter-spacing: 0;
-    color: var(--ndf-text);
+    color: var(--ui-text);
     background: #f8fafc;
     padding: 8px 6px;
     white-space: nowrap;
@@ -293,13 +44,13 @@ table.matrix th.matrix__head {
 }
 
 table.matrix thead th.matrix__head {
-    color: var(--ndf-text-muted);
+    color: var(--ui-text-muted);
 }
 
 table.matrix th.corner {
     width: 130px;
     background: #f8fafc;
-    border-bottom: 1px solid var(--ndf-border);
+    border-bottom: 1px solid var(--ui-border);
 }
 
 .matrix__cell {
@@ -321,170 +72,9 @@ table.matrix th.corner {
 
 .matrix__mirror {
     text-align: center;
-    color: var(--ndf-text-muted);
+    color: var(--ui-text-muted);
     background: #fbfcfe;
     font-variant-numeric: tabular-nums;
-}
-
-/* ---------- Кнопки ---------- */
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 9px 16px;
-    font: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: var(--ndf-radius-sm);
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease,
-        color 0.15s ease, box-shadow 0.15s ease;
-    white-space: nowrap;
-    user-select: none;
-}
-
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.btn--primary {
-    background: var(--ndf-primary);
-    color: #fff;
-    box-shadow: var(--ndf-shadow);
-}
-
-.btn--primary:hover:not(:disabled) {
-    background: var(--ndf-primary-hover);
-}
-
-.btn--primary:active:not(:disabled) {
-    transform: translateY(1px);
-}
-
-.btn--ghost {
-    background: #fff;
-    color: var(--ndf-text);
-    border-color: var(--ndf-border-strong);
-}
-
-.btn--ghost:hover:not(:disabled) {
-    border-color: var(--ndf-primary);
-    color: var(--ndf-primary);
-    background: #f8fafc;
-}
-
-.btn--icon {
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    font-size: 14px;
-    line-height: 1;
-    color: var(--ndf-text-muted);
-    background: transparent;
-    border-color: transparent;
-    border-radius: 50%;
-}
-
-.btn--icon:hover:not(:disabled) {
-    background: var(--ndf-error-bg);
-    color: var(--ndf-error);
-}
-
-/* ---------- Ошибки и подсказки ---------- */
-
-.err {
-    margin-top: 4px;
-    font-size: 12px;
-    color: var(--ndf-error);
-}
-
-.err--block {
-    margin: 0 0 12px;
-    padding: 8px 12px;
-    background: var(--ndf-error-bg);
-    border: 1px solid var(--ndf-error-border);
-    border-radius: var(--ndf-radius-sm);
-    font-size: 13px;
-}
-
-.alert {
-    margin-top: 16px;
-    padding: 12px 16px;
-    border-radius: var(--ndf-radius-sm);
-    font-size: 14px;
-}
-
-.alert--error {
-    background: var(--ndf-error-bg);
-    border: 1px solid var(--ndf-error-border);
-    color: var(--ndf-error);
-}
-
-/* ---------- Действия ---------- */
-
-.actions {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 24px;
-}
-
-/* ---------- Результат ---------- */
-
-.card--result {
-    margin-top: 24px;
-    border-color: #bfdbfe;
-    background: #f8fbff;
-
-}
-
-.summary {
-    display: flex;
-    gap: 32px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px dashed var(--ndf-border-strong);
-}
-
-.summary > div {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.summary__value {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--ndf-primary);
-    font-variant-numeric: tabular-nums;
-    line-height: 1.2;
-}
-
-.summary__label {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--ndf-text-muted);
-}
-
-.json {
-    text-align: start;
-    margin: 0;
-    padding: 16px;
-    background: #0f172a;
-    color: #e2e8f0;
-    border-radius: var(--ndf-radius-sm);
-    font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-    font-size: 12.5px;
-    line-height: 1.6;
-    overflow-x: auto;
-    max-height: 480px;
-    box-shadow: var(--ndf-shadow-lg);
 }
 
 /* ---------- Адаптив ---------- */
@@ -493,38 +83,5 @@ table.matrix th.corner {
     .ndf {
         padding: 20px 12px 48px;
         font-size: 14px;
-    }
-
-    .ndf__header h1 {
-        font-size: 21px;
-    }
-
-    .card {
-        padding: 16px;
-    }
-
-    .grid--narrow {
-        grid-template-columns: 1fr;
-    }
-
-    .field--note {
-        display: none;
-    }
-
-    .card__head {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .col-sm {
-        width: 140px;
-    }
-
-    .summary {
-        gap: 20px;
-    }
-
-    .actions .btn {
-        flex: 1;
     }
 }

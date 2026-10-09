@@ -1,0 +1,54 @@
+{
+    "schemeName": "ognosnort",
+    "nodes": [
+        {
+            "name": "УК1",
+            "x": 11,
+            "y": 1
+        },
+        {
+            "name": "УК2",
+            "x": 2,
+            "y": 2
+        },
+        {
+            "name": "УК3",
+            "x": 3,
+            "y": 3
+        }
+    ],
+    "cables": [
+        {
+            "name": "sfgh x hs",
+            "bandwidth": 14,
+            "pricePerMeter": 52356
+        }
+    ],
+    "nodeTypes": [
+        {
+            "name": "fvhfghf",
+            "speed": 124124,
+            "price": 3346435
+        }
+    ],
+    "traffic": {
+        "unit": "Мбит/с",
+        "matrix": [
+            [
+                0,
+                1,
+                0
+            ],
+            [
+                1,
+                0,
+                3
+            ],
+            [
+                0,
+                3,
+                0
+            ]
+        ]
+    }
+}

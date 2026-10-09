@@ -1,0 +1,102 @@
+/* Start.css */
+
+:root {
+    --start-bg: #f5f7fb;
+    --start-card: #ffffff;
+    --start-border: #e2e8f0;
+    --start-text: #1e293b;
+    --start-text-muted: #64748b;
+    --start-primary: #2563eb;
+    --start-primary-hover: #1d4ed8;
+    --start-radius: 10px;
+    --start-shadow: 0 1px 3px rgba(15, 23, 42, 0.06),
+        0 1px 2px rgba(15, 23, 42, 0.04);
+    --start-shadow-lg: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+.start {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 32px 20px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    color: var(--start-text);
+    font-size: 15px;
+    line-height: 1.5;
+    background: var(--start-bg);
+}
+
+.start__card {
+    width: 100%;
+    max-width: 480px;
+    padding: 32px 28px;
+    text-align: center;
+    background: var(--start-card);
+    border: 1px solid var(--start-border);
+    border-radius: var(--start-radius);
+    box-shadow: var(--start-shadow-lg);
+}
+
+.start__title {
+    margin: 0 0 6px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.start__subtitle {
+    margin: 0 0 24px;
+    color: var(--start-text-muted);
+    font-size: 14px;
+}
+
+.start__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.start__btn {
+    display: block;
+    width: 100%;
+    padding: 11px 16px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--start-radius);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.start__btn--primary {
+    background: var(--start-primary);
+    border: 1px solid var(--start-primary);
+    color: #fff;
+    box-shadow: var(--start-shadow);
+}
+
+.start__btn--primary:hover {
+    background: var(--start-primary-hover);
+    border-color: var(--start-primary-hover);
+}
+
+.start__btn--secondary {
+    background: #fff;
+    border: 1px solid var(--start-border);
+    color: var(--start-text);
+    box-shadow: var(--start-shadow);
+}
+
+.start__btn--secondary:hover:not(:disabled) {
+    border-color: var(--start-primary);
+    color: var(--start-primary);
+}
+
+.start__btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}

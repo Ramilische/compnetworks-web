@@ -1,26 +1,17 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Header from './components/page_blocks/header.jsx'
-
-import Start from './pages/Start.jsx'
-import GetNodes from './pages/GetNodes.jsx'
-import GetCables from './pages/GetCables.jsx'
-
 import './App.css'
+import Start from './pages/Start.jsx';
+import NetworkDesignForm from './pages/NetworkDesignForm.jsx';
 
 function App() {
 	return (
-    <>
-	<Header></Header>
-	<Router>
+    <Router>
         <Routes>
             <Route path="/" element={<Start />} />
-            <Route path="/init-nodes" element={<GetNodes />} />
-			<Route path="/init-cables" element={<GetCables />} />
+            <Route path="/new-scheme" element={<NetworkDesignForm />} />
         </Routes>
     </Router>
-    </>
   )
 }
 

@@ -17,7 +17,14 @@ export default function FormResult({ hasErrors, sendError, payload }) {
                     <Summary
                         items={[
                             { value: payload.nodes.length, label: 'узлов' },
-                            { value: payload.channels.length, label: 'каналов' },
+                            {
+                                value: payload.channelTypes.length,
+                                label: 'типов каналов',
+                            },
+                            {
+                                value: payload.channels.length,
+                                label: 'каналов',
+                            },
                             {
                                 value: payload.nodeTypes.length,
                                 label: 'вариантов УК',

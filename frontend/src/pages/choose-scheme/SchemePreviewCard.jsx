@@ -30,13 +30,20 @@ export default function SchemePreviewCard({ scheme, loading, error }) {
         );
     }
 
-    const { nodes = [], channels = [], nodeTypes = [], traffic = {} } = scheme.content;
+    const {
+        nodes = [],
+        channels = [],
+        channelTypes = [],
+        nodeTypes = [],
+        traffic = {},
+    } = scheme.content;
 
     return (
         <Card title={`Схема «${scheme.name}»`} variant="result">
             <Summary
                 items={[
                     { value: nodes.length, label: 'узлов' },
+                    { value: channelTypes.length, label: 'типов каналов' },
                     { value: channels.length, label: 'каналов' },
                     { value: nodeTypes.length, label: 'вариантов УК' },
                     { value: traffic.unit ?? '—', label: 'единица трафика' },

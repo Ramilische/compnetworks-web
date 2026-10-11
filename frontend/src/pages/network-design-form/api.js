@@ -12,11 +12,14 @@ export function buildPayload({ schemeName, nodes, channels, nodeTypes, traffic, 
             x: Number(n.x),
             y: Number(n.y),
         })),
-        channels: channels.map((c) => ({
+        // Каналы из формы сохраняются как типы каналов…
+        channelTypes: channels.map((c) => ({
             name: c.name.trim(),
             bandwidth: Number(c.bandwidth),
             pricePerMeter: Number(c.price),
         })),
+        // …а список каналов между узлами в новой схеме пока пустой
+        channels: [],
         nodeTypes: nodeTypes.map((t) => ({
             name: t.name.trim(),
             speed: Number(t.speed),

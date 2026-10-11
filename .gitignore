@@ -1,0 +1,4 @@
+backend/.venv
+backend/app/schemes/
+__pycache__/
+*.pyc

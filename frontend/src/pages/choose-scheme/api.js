@@ -25,7 +25,7 @@ export async function fetchSchemeList() {
 
 /**
  * Загружает содержимое схемы по её имени (файл nodes.json внутри папки).
- * Возвращает данные схемы (schemeName, nodes, channels, nodeTypes, traffic).
+ * Возвращает данные схемы (schemeName, nodes, channels, channelTypes, nodeTypes, traffic).
  */
 export async function fetchScheme(schemeName) {
     const url = `${GET_SCHEME_URL}?scheme_name=${encodeURIComponent(schemeName)}`;

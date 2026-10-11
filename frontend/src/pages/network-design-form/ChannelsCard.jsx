@@ -63,10 +63,10 @@ export default function ChannelsCard({ channels, errors, clearError, onAdd, onRe
                                 step="any"
                                 placeholder="1000"
                                 value={c.bandwidth}
-                                error={errors[`cable-${i}-bw`]}
+                                error={errors[`channel-${i}-bw`]}
                                 onChange={(e) => {
                                     onUpdate(c.id, 'bandwidth', e.target.value);
-                                    clearError(`cable-${i}-bw`);
+                                    clearError(`channel-${i}-bw`);
                                 }}
                             />
                         ),

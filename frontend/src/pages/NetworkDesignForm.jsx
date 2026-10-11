@@ -1,5 +1,5 @@
 import { Actions, Button, PageHeader } from '../components/ui';
-import CablesCard from './network-design-form/CablesCard.jsx';
+import ChannelsCard from './network-design-form/ChannelsCard.jsx';
 import FormResult from './network-design-form/FormResult.jsx';
 import NodeTypesCard from './network-design-form/NodeTypesCard.jsx';
 import NodesCard from './network-design-form/NodesCard.jsx';
@@ -21,10 +21,10 @@ export default function NetworkDesignForm() {
         addNode,
         removeNode,
         updateNode,
-        cables,
-        addCable,
-        removeCable,
-        updateCable,
+        channels,
+        addChannel,
+        removeChannel,
+        updateChannel,
         nodeTypes,
         addNodeType,
         removeNodeType,
@@ -67,13 +67,13 @@ export default function NetworkDesignForm() {
             />
 
             {/* ---------- 2. КАНАЛЫ ---------- */}
-            <CablesCard
-                cables={cables}
+            <ChannelsCard
+                channels={channels}
                 errors={errors}
                 clearError={clearError}
-                onAdd={addCable}
-                onRemove={removeCable}
-                onUpdate={updateCable}
+                onAdd={addChannel}
+                onRemove={removeChannel}
+                onUpdate={updateChannel}
             />
 
             {/* ---------- 3. ВАРИАНТЫ УК ---------- */}

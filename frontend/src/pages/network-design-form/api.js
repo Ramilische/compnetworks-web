@@ -4,7 +4,7 @@ import { CREATE_SCHEME_URL, pairKey } from './constants.js';
  * Собирает итоговый payload для отправки на сервер
  * (значения приводятся к числам, матрица трафика — симметричная).
  */
-export function buildPayload({ schemeName, nodes, cables, nodeTypes, traffic, trafficUnit }) {
+export function buildPayload({ schemeName, nodes, channels, nodeTypes, traffic, trafficUnit }) {
     return {
         schemeName: schemeName.trim(),
         nodes: nodes.map((n) => ({
@@ -12,7 +12,7 @@ export function buildPayload({ schemeName, nodes, cables, nodeTypes, traffic, tr
             x: Number(n.x),
             y: Number(n.y),
         })),
-        cables: cables.map((c) => ({
+        channels: channels.map((c) => ({
             name: c.name.trim(),
             bandwidth: Number(c.bandwidth),
             pricePerMeter: Number(c.price),

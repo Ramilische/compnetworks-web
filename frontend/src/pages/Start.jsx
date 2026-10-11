@@ -18,8 +18,7 @@ function Start() {
                     <Button onClick={() => navigate('/new-scheme')}>
                         Создать новую схему
                     </Button>
-                    {/* TODO: кнопка станет активной, когда появится страница со списком схем */}
-                    <Button variant="ghost" disabled>
+                    <Button variant="ghost" onClick={() => navigate('/choose-scheme')}>
                         Список схем
                     </Button>
                 </Actions>

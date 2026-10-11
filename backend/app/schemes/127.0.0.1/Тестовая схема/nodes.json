@@ -17,18 +17,33 @@
             "y": 3
         }
     ],
-    "cables": [
+    "channels": [
         {
             "name": "Канал 1",
             "bandwidth": 1000,
-            "pricePerMeter": 100
+            "pricePerMeter": 120
+        },
+        {
+            "name": "Канал 2",
+            "bandwidth": 100,
+            "pricePerMeter": 50
         }
     ],
     "nodeTypes": [
         {
-            "name": "Маршрутизатор тип 1",
-            "speed": 10000,
-            "price": 50000
+            "name": "Маршрутизатор 1",
+            "speed": 1000,
+            "price": 5000
+        },
+        {
+            "name": "Маршрутизатор 2",
+            "speed": 5000,
+            "price": 30000
+        },
+        {
+            "name": "Маршрутизатор 3",
+            "speed": 200,
+            "price": 2000
         }
     ],
     "traffic": {
@@ -36,17 +51,17 @@
         "matrix": [
             [
                 0,
-                300,
+                500,
                 0
             ],
             [
-                300,
+                500,
                 0,
-                500
+                100
             ],
             [
                 0,
-                500,
+                100,
                 0
             ]
         ]

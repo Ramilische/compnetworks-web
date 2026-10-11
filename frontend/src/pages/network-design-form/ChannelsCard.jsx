@@ -4,14 +4,14 @@ import {
     DataTable,
     ErrorText,
     TextInput,
-} from '../../components/ui';
-import { MAX_CABLES } from './constants.js';
+} from '../../components/ui/index.js';
+import { MAX_CHANNELS } from './constants.js';
 
 /**
  * Шаг 2: каналы связи.
  * onAdd() / onRemove(id) / onUpdate(id, field, value) / clearError(key).
  */
-export default function CablesCard({ cables, errors, clearError, onAdd, onRemove, onUpdate }) {
+export default function ChannelsCard({ channels, errors, clearError, onAdd, onRemove, onUpdate }) {
     return (
         <Card
             step={2}
@@ -20,21 +20,21 @@ export default function CablesCard({ cables, errors, clearError, onAdd, onRemove
                 <Button
                     variant="ghost"
                     onClick={onAdd}
-                    disabled={cables.length >= MAX_CABLES}
+                    disabled={channels.length >= MAX_CHANNELS}
                 >
                     + Добавить канал
                 </Button>
             }
         >
-            <ErrorText block>{errors.cables}</ErrorText>
+            <ErrorText block>{errors.channels}</ErrorText>
 
             <DataTable
-                rows={cables}
+                rows={channels}
                 rowKey={(c) => c.id}
                 remove={{
                     title: 'Удалить канал',
                     onClick: (c) => onRemove(c.id),
-                    disabled: cables.length <= 1,
+                    disabled: channels.length <= 1,
                 }}
                 columns={[
                     {
@@ -44,10 +44,10 @@ export default function CablesCard({ cables, errors, clearError, onAdd, onRemove
                             <TextInput
                                 placeholder="Наименование канала"
                                 value={c.name}
-                                error={errors[`cable-${i}-name`]}
+                                error={errors[`channel-${i}-name`]}
                                 onChange={(e) => {
                                     onUpdate(c.id, 'name', e.target.value);
-                                    clearError(`cable-${i}-name`);
+                                    clearError(`channel-${i}-name`);
                                 }}
                             />
                         ),
@@ -82,10 +82,10 @@ export default function CablesCard({ cables, errors, clearError, onAdd, onRemove
                                 step="any"
                                 placeholder="120"
                                 value={c.price}
-                                error={errors[`cable-${i}-price`]}
+                                error={errors[`channel-${i}-price`]}
                                 onChange={(e) => {
                                     onUpdate(c.id, 'price', e.target.value);
-                                    clearError(`cable-${i}-price`);
+                                    clearError(`channel-${i}-price`);
                                 }}
                             />
                         ),

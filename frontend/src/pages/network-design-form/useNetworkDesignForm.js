@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { buildPayload, sendScheme } from './api.js';
 import {
     API_URL,
-    MAX_CABLES,
+    MAX_CHANNELS,
     MAX_NODES,
     MAX_NODE_TYPES,
     initialNodes,
-    makeCable,
+    makeChannel,
     makeNode,
     makeNodeType,
     nextNodeName,
@@ -23,7 +23,7 @@ export default function useNetworkDesignForm() {
 
     const [nodes, setNodes] = useState(initialNodes);
 
-    const [cables, setCables] = useState(() => [makeCable()]);
+    const [channels, setChannels] = useState(() => [makeChannel()]);
 
     const [nodeTypes, setNodeTypes] = useState(() => [makeNodeType()]);
 
@@ -81,13 +81,13 @@ export default function useNetworkDesignForm() {
 
     /* ---------------- КАНАЛЫ ---------------- */
 
-    const addCable = () =>
-        setCables((prev) => (prev.length >= MAX_CABLES ? prev : [...prev, makeCable()]));
+    const addChannel = () =>
+        setChannels((prev) => (prev.length >= MAX_CHANNELS ? prev : [...prev, makeChannel()]));
 
-    const removeCable = (id) => setCables((prev) => prev.filter((c) => c.id !== id));
+    const removeChannel = (id) => setChannels((prev) => prev.filter((c) => c.id !== id));
 
-    const updateCable = (id, field, value) => {
-        setCables((prev) => prev.map((c) => (c.id === id ? { ...c, [field]: value } : c)));
+    const updateChannel = (id, field, value) => {
+        setChannels((prev) => prev.map((c) => (c.id === id ? { ...c, [field]: value } : c)));
         setPayload(null);
     };
 
@@ -118,7 +118,7 @@ export default function useNetworkDesignForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const errs = validateForm({ schemeName, nodes, cables, nodeTypes, traffic });
+        const errs = validateForm({ schemeName, nodes, channels, nodeTypes, traffic });
         setErrors(errs);
 
         if (Object.keys(errs).length > 0) {
@@ -129,7 +129,7 @@ export default function useNetworkDesignForm() {
         const result = buildPayload({
             schemeName,
             nodes,
-            cables,
+            channels,
             nodeTypes,
             traffic,
             trafficUnit,
@@ -151,7 +151,7 @@ export default function useNetworkDesignForm() {
     const handleReset = () => {
         setSchemeName('');
         setNodes(initialNodes());
-        setCables([makeCable()]);
+        setChannels([makeChannel()]);
         setNodeTypes([makeNodeType()]);
         setTraffic({});
         setTrafficUnit('Мбит/с');
@@ -169,10 +169,10 @@ export default function useNetworkDesignForm() {
         addNode,
         removeNode,
         updateNode,
-        cables,
-        addCable,
-        removeCable,
-        updateCable,
+        channels,
+        addChannel,
+        removeChannel,
+        updateChannel,
         nodeTypes,
         addNodeType,
         removeNodeType,

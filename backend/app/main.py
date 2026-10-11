@@ -61,19 +61,39 @@ async def create_scheme(request: Request):
     return JSONResponse(content={'message': 'Success'}, status_code=200)
 
 
-# @app.get('/get-schemes')
-# async def get_schemes(request: Request):
-#     """
-#     Метод для получения всех существующих схем
-#     """
+@app.get('/get-scheme-list')
+async def get_scheme_list(request: Request):
+    """
+    Метод для получения всех существующих схем
+    """
 
-#     try:
-#         if request.client:
-#             path = SCHEMES_PATH.joinpath(request.client.host)
-#             return JSONResponse(content={'schemes': [item.name for item in path.iterdir() if item.is_dir()]}, status_code=200)
+    try:
+        if request.client:
+            path = SCHEMES_PATH.joinpath(request.client.host)
+            return JSONResponse(content={
+                'message': 'Success', 
+                'schemes': [item.name for item in path.iterdir() if item.is_dir()]
+                }, status_code=200)
 
-#     except FileNotFoundError:
-#         return JSONResponse(content={'message': 'Directory not found'}, status_code=404)
+    except FileNotFoundError:
+        return JSONResponse(content={'message': 'Directory not found'}, status_code=404)
+
+
+@app.get('/get-scheme')
+async def get_scheme(request: Request, scheme_name: str):
+    """
+    Метод для получения схемы по имени
+    """
+
+    try:
+        if request.client:
+            path = SCHEMES_PATH.joinpath(request.client.host, scheme_name)
+            with open(path.joinpath('nodes.json'), 'r', encoding='utf-8') as file:
+                content = json.load(file)
+                return JSONResponse(content={'message': 'Success', 'scheme': content}, status_code=200)
+
+    except FileNotFoundError:
+        return JSONResponse(content={'message': 'Scheme not found'}, status_code=404)
 
 
 # @app.post('/init-node')

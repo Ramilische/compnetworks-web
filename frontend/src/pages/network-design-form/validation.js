@@ -4,7 +4,7 @@ import { SCHEME_NAME_PATTERN, pairKey } from './constants.js';
  * Проверка формы перед отправкой.
  * Возвращает объект ошибок вида { [ключ]: сообщение }.
  */
-export function validateForm({ schemeName, nodes, cables, nodeTypes, traffic }) {
+export function validateForm({ schemeName, nodes, channels, nodeTypes, traffic }) {
     const errs = {};
 
     const name = schemeName.trim();
@@ -22,12 +22,12 @@ export function validateForm({ schemeName, nodes, cables, nodeTypes, traffic }) 
         if (n.y === '' || Number.isNaN(Number(n.y))) errs[`node-${i}-y`] = 'Число';
     });
 
-    if (cables.length === 0) errs.cables = 'Добавьте хотя бы один канал';
-    cables.forEach((c, i) => {
-        if (!c.name.trim()) errs[`cable-${i}-name`] = 'Укажите название';
-        if (!(Number(c.bandwidth) > 0)) errs[`cable-${i}-bw`] = 'Должна быть > 0';
+    if (channels.length === 0) errs.channels = 'Добавьте хотя бы один канал';
+    channels.forEach((c, i) => {
+        if (!c.name.trim()) errs[`channel-${i}-name`] = 'Укажите название';
+        if (!(Number(c.bandwidth) > 0)) errs[`channel-${i}-bw`] = 'Должна быть > 0';
         if (c.price === '' || Number.isNaN(Number(c.price)) || Number(c.price) < 0)
-            errs[`cable-${i}-price`] = 'Должна быть ≥ 0';
+            errs[`channel-${i}-price`] = 'Должна быть ≥ 0';
     });
 
     if (nodeTypes.length === 0) errs.nodeTypes = 'Добавьте хотя бы один вариант УК';

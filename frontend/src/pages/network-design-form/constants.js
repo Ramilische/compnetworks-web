@@ -13,7 +13,7 @@ export const nextNodeName = (nodes) => {
 };
 
 export const makeNode = (name) => ({ id: uid(), name, x: '', y: '' });
-export const makeCable = () => ({ id: uid(), name: '', bandwidth: '', price: '' });
+export const makeChannel = () => ({ id: uid(), name: '', bandwidth: '', price: '' });
 export const makeNodeType = () => ({ id: uid(), name: '', speed: '', price: '' });
 
 // Стартовый набор узлов (новые id при каждом вызове — для initial state и сброса)
@@ -22,8 +22,8 @@ export const initialNodes = () => [makeNode('УК1'), makeNode('УК2'), makeNod
 export const pairKey = (a, b) => (a < b ? `${a}:${b}` : `${b}:${a}`);
 
 export const MAX_NODES = 10000;
-export const MAX_CABLES = 20;
-export const MAX_NODE_TYPES = 20;
+export const MAX_CHANNELS = 10000;
+export const MAX_NODE_TYPES = 10000;
 
 // Разрешены только буквы, цифры, пробелы, дефис и подчёркивание
 export const SCHEME_NAME_PATTERN = /^[\p{L}\p{N}\s_-]+$/u;

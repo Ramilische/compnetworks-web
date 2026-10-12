@@ -36,6 +36,7 @@ human-readable status ("Success", "Scheme already exists", ...).
 | POST   | `/create-scheme`   | JSON payload (see below)           | Creates `nodes.json` for the scheme; 400 if scheme already exists |
 | GET    | `/get-scheme-list` | —                                  | `{ schemes: [name, ...] }` for the client host; 404 if host dir missing |
 | GET    | `/get-scheme`      | `scheme_name=<name>`               | `{ scheme: <payload> }`; 404 if not found     |
+| POST   | `/update-scheme`   | JSON payload (same shape as create)| Overwrites `nodes.json` of an existing scheme; 404 if scheme missing; 400 on invalid name/JSON |
 
 There is a commented-out `POST /init-node` endpoint in `backend/app/main.py` (not active,
 do not rely on it).
@@ -59,17 +60,23 @@ Built by `buildPayload()` in `frontend/src/pages/network-design-form/api.js`:
 ```json
 {
   "schemeName": "My scheme",
-  "nodes": [{ "name": "УК1", "x": 10, "y": 20 }],
-  "channelTypes": [{ "name": "...", "bandwidth": 100, "pricePerMeter": 5 }],
-  "channels": [],
-  "nodeTypes": [{ "name": "...", "speed": 100, "price": 1000 }],
+  "nodes": [{ "name": "УК1", "x": 10, "y": 20, "typeId": 1 }],
+  "channelTypes": [{ "id": 1, "name": "...", "bandwidth": 100, "pricePerMeter": 5 }],
+  "channels": [{ "from": 0, "to": 1, "typeId": 1 }],
+  "nodeTypes": [{ "id": 1, "name": "...", "speed": 100, "price": 1000 }],
   "traffic": { "unit": "Мбит/с", "matrix": [[0]] }
 }
 ```
 
 Notes:
-- Form "channels" are saved as **channelTypes**; the `channels` list (actual links between
-  nodes) is always empty for now — editing links is planned work.
+- `nodeTypes[].id` and `channelTypes[].id` are **auto-assigned** by `buildPayload`
+  (sequential numbers `1..N` within each list) and never edited by the user.
+- `nodes[].typeId` references `nodeTypes[].id`; the form has no per-node type UI yet,
+  so every node defaults to the first node type.
+- Form "channels" are saved as **channelTypes**; each `channels[i]` entry has the shape
+  `{ from, to, typeId }` where `from`/`to` are 0-based indices into `nodes` and `typeId`
+  references `channelTypes[].id`. The list is still empty for now — adding links is
+  planned work (edit page).
 - `traffic.matrix` is symmetric, ordered like `nodes`, diagonal is 0.
 
 ## Current status / TODO (from root README)

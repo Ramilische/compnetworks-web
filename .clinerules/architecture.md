@@ -8,11 +8,13 @@ compnetworks-web/
 │   ├── index.html
 │   ├── vite.config.js
 │   └── src/
-├── backend/           # FastAPI app
-│   ├── main.py        # dev entrypoint (uvicorn runner)
-│   └── app/
-│       ├── main.py    # FastAPI app + endpoints
-│       └── schemes/   # JSON storage (per client host)
+├── backend/           # FastAPI app (uv project: pyproject.toml + uv.lock)
+│   ├── main.py        # compat shim → app.cli (python main.py still works)
+│   ├── app/
+│   │   ├── main.py    # FastAPI app + endpoints
+│   │   ├── cli.py     # dev-server entry (console script `uv run app`)
+│   │   └── schemes/   # JSON storage (per client host)
+│   └── tests/         # pytest API tests (TestClient, storage → tmp dirs)
 └── README.md          # project overview (Russian)
 ```
 
@@ -29,10 +31,12 @@ compnetworks-web/
 
 **Backend** (`backend/`):
 - Python 3.14 (`.python-version`), venv managed by **uv** (`.venv`)
-- FastAPI + uvicorn (+ gunicorn, pillow, pydantic installed in venv)
-- No `pyproject.toml` / `requirements.txt` yet — if you add a dependency, consider creating one
-  and mention it to the user
-- Dev server: `python main.py` → uvicorn on `127.0.0.1:1234`, `reload=True`
+- Packaging/deps: `backend/pyproject.toml` (hatchling build) + committed `uv.lock`;
+  runtime deps: fastapi, uvicorn, gunicorn, pillow (pydantic comes with fastapi);
+  dev group: pytest, httpx2 — add new ones with `uv add <pkg>` / `uv add --dev <pkg>`
+- Console scripts (run inside `backend/`): `uv run app` → dev server,
+  `uv run tests` → pytest (storage monkeypatched to tmp dirs in tests)
+- Dev server: `uv run app` → uvicorn on `127.0.0.1:1234`, `reload=True`
 
 ## Frontend conventions (follow strictly)
 
@@ -92,7 +96,8 @@ Navigation between pages uses `useNavigate()` from `react-router-dom`.
 
 ## Backend conventions
 
-- FastAPI app instance in `backend/app/main.py`; `backend/main.py` only runs uvicorn.
+- FastAPI app instance in `backend/app/main.py`; `app/cli.py` runs uvicorn
+  (console script `uv run app`), `backend/main.py` is a compat shim.
 - Keep `root_path='/api'`; frontend calls endpoints under `/api/`.
 - CORS middleware must stay enabled and allow `localhost` / `127.0.0.1` on any port
   (frontend dev server is `localhost:5173`).

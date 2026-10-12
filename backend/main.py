@@ -1,9 +1,9 @@
-from uvicorn import run
-from app.main import app
+"""
+Обратно-совместимая точка входа: `python main.py` запускает dev-сервер.
+Основная логика запуска — в app/cli.py (console script `uv run app`).
+"""
 
-
-def main():
-    run('app.main:app', host='127.0.0.1', port=1234, log_level='info', reload=True)
+from app.cli import main
 
 
 if __name__ == '__main__':

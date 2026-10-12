@@ -1,0 +1,36 @@
+[project]
+name = "compnetworks-backend"
+version = "0.1.0"
+description = "Backend веб-версии проекта «Проектирование компьютерной сети» (FastAPI)"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "gunicorn",
+    "pillow",
+]
+
+[project.scripts]
+# Короткие команды: uv run app / uv run tests (запускать из backend/)
+app = "app.cli:main"
+tests = "pytest:main"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "httpx2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+# Данные хранилища — не часть пакета
+exclude = ["app/schemes"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

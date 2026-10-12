@@ -2,6 +2,9 @@
 
 ## Development commands
 
+The VS Code default terminal is **Git Bash** — write shell commands bash-compatible
+(forward-slash paths, `&&`, `rm`; no PowerShell-only syntax).
+
 Frontend (run inside `frontend/`):
 
 ```bash
@@ -14,13 +17,14 @@ npm run preview    # preview the production build
 Backend (run inside `backend/`):
 
 ```bash
-python main.py     # or: uv run main.py — uvicorn on 127.0.0.1:1234 with --reload
+uv run app         # uvicorn on 127.0.0.1:1234 with --reload (console script)
+uv run tests       # pytest: API tests in backend/tests/ (TestClient, tmp storage)
 ```
 
-The backend venv is uv-managed (`backend/.venv`, Python 3.14). To add a Python dependency:
-`uv add <pkg>` (or `uv pip install <pkg>` while no pyproject exists) — remember there is
-currently **no** `pyproject.toml`/`requirements.txt`; creating one when adding deps is
-welcome, and tell the user about it.
+The backend venv is uv-managed (`backend/.venv`, Python 3.14) and dependencies live in
+`backend/pyproject.toml` (locked in `backend/uv.lock` — commit the lockfile). To add a
+dependency: `uv add <pkg>` (runtime) or `uv add --dev <pkg>` (tests/tools), then commit
+the updated lockfile.
 
 ## Verification checklist
 
@@ -32,7 +36,8 @@ After making changes:
    (e.g. `curl http://localhost:1234/api/get-scheme-list`).
 4. Cross-cutting (API/CORS/storage) changes: start both servers and verify the flow
    through the browser / `npm run dev` at `localhost:5173`.
-5. There is no test suite yet — do not claim things are "tested"; verify by running.
+5. Backend: run `uv run tests` in `backend/` and fix failing tests; extend the
+   suite when changing API behavior (don't claim things are "tested" otherwise).
 
 ## Do / Don't
 

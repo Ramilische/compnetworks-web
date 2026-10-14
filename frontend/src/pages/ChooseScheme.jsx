@@ -45,6 +45,7 @@ export default function ChooseScheme() {
                 selectedName={selectedName}
                 pendingName={selectedName}
                 onLoad={loadScheme}
+                onOpen={(name) => navigate(`/edit-scheme/${encodeURIComponent(name)}`)}
                 onRefresh={reloadList}
             />
 

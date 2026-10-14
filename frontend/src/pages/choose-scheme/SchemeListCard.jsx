@@ -4,7 +4,8 @@ import { Button, Card, DataTable, Hint } from '../../components/ui';
  * Карточка со списком схем (папок) на сервере.
  * schemes — имена схем; loading — идёт загрузка списка или схемы;
  * selectedName — имя открытой схемы; pendingName — имя загружаемой схемы;
- * onLoad(name) — загрузить схему; onRefresh() — обновить список.
+ * onLoad(name) — загрузить схему (просмотр JSON); onOpen(name) — открыть
+ * схему на странице редактирования; onRefresh() — обновить список.
  */
 export default function SchemeListCard({
     schemes,
@@ -12,6 +13,7 @@ export default function SchemeListCard({
     selectedName,
     pendingName,
     onLoad,
+    onOpen,
     onRefresh,
 }) {
     const columns = [
@@ -25,13 +27,22 @@ export default function SchemeListCard({
                 const isPending = row.name === pendingName && loading;
 
                 return (
-                    <Button
-                        variant={isSelected ? 'primary' : 'ghost'}
-                        disabled={loading}
-                        onClick={() => onLoad(row.name)}
-                    >
-                        {isPending ? 'Загрузка…' : 'Загрузить'}
-                    </Button>
+                    <span className="cs__row-actions">
+                        <Button
+                            variant={isSelected ? 'primary' : 'ghost'}
+                            disabled={loading}
+                            onClick={() => onLoad(row.name)}
+                        >
+                            {isPending ? 'Загрузка…' : 'Загрузить'}
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            disabled={loading}
+                            onClick={() => onOpen(row.name)}
+                        >
+                            Открыть
+                        </Button>
+                    </span>
                 );
             },
         },

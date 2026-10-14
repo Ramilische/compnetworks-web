@@ -22,14 +22,20 @@
     box-sizing: border-box;
 }
 
-/* Колонка с кнопкой «Загрузить» шире стандартной .col-act */
+/* Колонка с кнопками «Загрузить»/«Открыть» шире стандартной .col-act */
 .cs th.cs__col-action {
-    width: 140px;
+    width: 260px;
     text-align: right;
 }
 
 .cs td:last-child {
     text-align: right;
+}
+
+/* Две кнопки в строке списка схем */
+.cs__row-actions {
+    display: inline-flex;
+    gap: 8px;
 }
 
 /* ---------- Адаптив ---------- */
@@ -41,6 +47,6 @@
     }
 
     .cs th.cs__col-action {
-        width: 120px;
+        width: 220px;
     }
 }

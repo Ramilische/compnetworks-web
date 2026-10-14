@@ -18,19 +18,23 @@ export default function useChooseScheme() {
 
     /* ---------------- СПИСОК СХЕМ ---------------- */
 
-    // Все setState — только после await, поэтому функцию можно вызывать из effect
-    const applyList = useCallback(async () => {
-        try {
-            const names = await fetchSchemeList();
-            setSchemes(names);
-            setListError(null);
-        } catch (err) {
-            setSchemes([]);
-            setListError(`Не удалось получить список схем: ${err.message}`);
-        } finally {
-            setListLoading(false);
-        }
-    }, []);
+    // Все setState — только в callback'ах promise'а, не синхронно
+    // в эффекте (правило react-hooks/set-state-in-effect); функцию
+    // можно вызывать из effect и из кнопки «Обновить»
+    const applyList = useCallback(
+        () =>
+            fetchSchemeList()
+                .then((names) => {
+                    setSchemes(names);
+                    setListError(null);
+                })
+                .catch((err) => {
+                    setSchemes([]);
+                    setListError(`Не удалось получить список схем: ${err.message}`);
+                })
+                .finally(() => setListLoading(false)),
+        []
+    );
 
     // Начальная загрузка списка (listLoading=true — в начальном state)
     useEffect(() => {

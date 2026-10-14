@@ -19,11 +19,12 @@ can list and load saved schemes.
 
 Defined in `frontend/src/App.jsx` (React Router, `BrowserRouter`):
 
-| Route            | Page                     | Purpose                                   |
-| ---------------- | ------------------------ | ----------------------------------------- |
-| `/`              | `Start.jsx`              | Home page, choose action                  |
-| `/new-scheme`    | `NetworkDesignForm.jsx`  | Form to design a new network scheme      |
-| `/choose-scheme` | `ChooseScheme.jsx`       | List saved schemes, load one from server  |
+| Route             | Page                     | Purpose                                   |
+| ----------------- | ------------------------ | ----------------------------------------- |
+| `/`               | `Start.jsx`              | Home page, choose action                  |
+| `/new-scheme`     | `NetworkDesignForm.jsx`  | Form to design a new network scheme      |
+| `/choose-scheme`  | `ChooseScheme.jsx`       | List saved schemes, load one from server  |
+| `/edit-scheme/:schemeName` | `EditScheme.jsx` | View a saved scheme: node map + tables (interactions planned) |
 
 ## Backend API
 
@@ -84,10 +85,15 @@ Notes:
 Done:
 - Router models, packet size, "generate input file" (i.e. create-scheme flow), frontend–backend
   integration, frontend split into components/pages.
+- Edit-scheme page step 1 (`/edit-scheme/:schemeName`): loads a scheme via `GET /get-scheme`
+  and displays it (SVG node map by x/y, nodes/channels tables). Entry point: «Открыть» button
+  in the choose-scheme list.
 
 Planned:
 - Finish/robustify the backend.
-- Add a page for viewing and editing a network:
+- Edit-scheme page steps 2+:
   - select a node by click,
   - change the type of the selected node,
-  - add links (channels) between nodes.
+  - add links (channels) between nodes,
+  - save via `POST /update-scheme`,
+  - redirect from scheme creation to the edit page (instead of showing raw JSON).

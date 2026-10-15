@@ -71,3 +71,57 @@ export function computeMapLayout(nodes) {
         labelSize,
     };
 }
+
+/**
+ * Возвращает копию схемы с изменённым узлом index
+ * (patch — частичные поля узла: name / typeId / x / y).
+ */
+export function updateNodeAt(scheme, index, patch) {
+    return {
+        ...scheme,
+        nodes: scheme.nodes.map((node, i) => (i === index ? { ...node, ...patch } : node)),
+    };
+}
+
+/**
+ * Возвращает копию схемы без узла index. Индексы узлов — это позиции в
+ * nodes, поэтому: каналы с удалённым узлом удаляются, индексы остальных
+ * сдвигаются на 1 вниз; из traffic.matrix удаляются строка и столбец
+ * index, чтобы матрица осталась симметричной и согласованной с nodes.
+ */
+export function deleteNodeAt(scheme, index) {
+    const nodes = scheme.nodes.filter((_, i) => i !== index);
+    const channels = (scheme.channels || [])
+        .filter((c) => c.from !== index && c.to !== index)
+        .map((c) => ({
+            ...c,
+            from: c.from > index ? c.from - 1 : c.from,
+            to: c.to > index ? c.to - 1 : c.to,
+        }));
+    const matrix = (scheme.traffic?.matrix || [])
+        .filter((_, i) => i !== index)
+        .map((row) => row.filter((_, j) => j !== index));
+    return {
+        ...scheme,
+        nodes,
+        channels,
+        traffic: { ...scheme.traffic, matrix },
+    };
+}
+
+/**
+ * Стиль позиционирования контекстного меню относительно рамки карты:
+ * left/top — проценты центра узла, при положении узла у правого/нижнего
+ * края меню переворачивается, чтобы не вылезать за рамку.
+ */
+export function menuAnchorStyle(layout, point) {
+    const left = ((point.cx - layout.x) / layout.size) * 100;
+    const top = ((point.cy - layout.y) / layout.size) * 100;
+    const offsetX = left > 60 ? 'calc(-100% - 12px)' : '12px';
+    const offsetY = top > 60 ? 'calc(-100% - 12px)' : '12px';
+    return {
+        left: `${left}%`,
+        top: `${top}%`,
+        transform: `translate(${offsetX}, ${offsetY})`,
+    };
+}

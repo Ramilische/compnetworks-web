@@ -8,22 +8,39 @@ import useEditScheme from './edit-scheme/useEditScheme.js';
 import './styles/EditScheme.css';
 
 /**
- * Страница «Редактирование схемы» (пока — только просмотр):
- * карта сети, таблица узлов и таблица каналов.
- * Взаимодействие (клик по узлу, смена типов, добавление каналов)
- * будет добавлено позже.
+ * Страница «Редактирование схемы»: карта сети, таблица узлов и таблица
+ * каналов. По клику (ЛКМ) на узел открывается контекстное меню: изменить
+ * тип / имя / координаты, удалить узел. Изменения пока применяются только
+ * в памяти (флаг dirty) — сохранение на сервере появится позже.
  */
 export default function EditScheme() {
     const navigate = useNavigate();
     const { schemeName } = useParams();
 
-    const { scheme, loading, error, reload } = useEditScheme(schemeName);
+    const {
+        scheme,
+        loading,
+        error,
+        reload,
+        dirty,
+        selectedIndex,
+        menuAction,
+        draft,
+        draftError,
+        selectNode,
+        closeMenu,
+        openAction,
+        updateDraft,
+        applyAction,
+        cancelAction,
+        confirmDelete,
+    } = useEditScheme(schemeName);
 
     return (
         <div className="es">
             <PageHeader
                 title={`Схема «${schemeName}»`}
-                subtitle="Просмотр схемы компьютерной сети — редактирование появится позже"
+                subtitle="Кликните по узлу на карте, чтобы изменить его или удалить"
             />
 
             {/* ---------- ОШИБКА ЗАГРУЗКИ ---------- */}
@@ -36,10 +53,31 @@ export default function EditScheme() {
                 </Card>
             )}
 
+            {/* ---------- НЕСОХРАНЁННЫЕ ИЗМЕНЕНИЯ ---------- */}
+            {!loading && !error && dirty && (
+                <Hint>
+                    Есть несохранённые изменения — сохранение на сервере появится позже.
+                    «Сбросить изменения» вернёт состояние, загруженное с сервера.
+                </Hint>
+            )}
+
             {/* ---------- СОДЕРЖИМОЕ СХЕМЫ ---------- */}
             {!loading && !error && scheme && (
                 <>
-                    <SchemeMapCard scheme={scheme} />
+                    <SchemeMapCard
+                        scheme={scheme}
+                        selectedIndex={selectedIndex}
+                        menuAction={menuAction}
+                        draft={draft}
+                        draftError={draftError}
+                        onSelectNode={selectNode}
+                        onCloseMenu={closeMenu}
+                        onAction={openAction}
+                        onDraftChange={updateDraft}
+                        onApply={applyAction}
+                        onBack={cancelAction}
+                        onDelete={confirmDelete}
+                    />
                     <NodesCard nodes={scheme.nodes} nodeTypes={scheme.nodeTypes} />
                     <ChannelsCard
                         channels={scheme.channels}
@@ -53,6 +91,9 @@ export default function EditScheme() {
             <Actions>
                 {error && (
                     <Button onClick={reload}>Повторить загрузку</Button>
+                )}
+                {dirty && !error && (
+                    <Button onClick={reload}>Сбросить изменения</Button>
                 )}
                 <Button variant="ghost" onClick={() => navigate('/choose-scheme')}>
                     К выбору схем

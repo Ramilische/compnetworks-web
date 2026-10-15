@@ -302,6 +302,17 @@ input.ui-input::placeholder {
     background: #f8fafc;
 }
 
+.btn--danger {
+    background: var(--ui-error);
+    color: #fff;
+    border-color: var(--ui-error);
+}
+
+.btn--danger:hover:not(:disabled) {
+    background: #b91c1c;
+    border-color: #b91c1c;
+}
+
 .btn--icon {
     width: 30px;
     height: 30px;

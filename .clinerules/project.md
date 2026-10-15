@@ -24,7 +24,7 @@ Defined in `frontend/src/App.jsx` (React Router, `BrowserRouter`):
 | `/`               | `Start.jsx`              | Home page, choose action                  |
 | `/new-scheme`     | `NetworkDesignForm.jsx`  | Form to design a new network scheme      |
 | `/choose-scheme`  | `ChooseScheme.jsx`       | List saved schemes, load one from server  |
-| `/edit-scheme/:schemeName` | `EditScheme.jsx` | View a saved scheme: node map + tables (interactions planned) |
+| `/edit-scheme/:schemeName` | `EditScheme.jsx` | Edit a saved scheme: node map + tables, click-to-edit nodes |
 
 ## Backend API
 
@@ -88,12 +88,15 @@ Done:
 - Edit-scheme page step 1 (`/edit-scheme/:schemeName`): loads a scheme via `GET /get-scheme`
   and displays it (SVG node map by x/y, nodes/channels tables). Entry point: «Открыть» button
   in the choose-scheme list.
+- Edit-scheme page step 2: LMB click on a node selects it and opens a context menu
+  (change type / name / coordinates, delete node with confirmation). Edits are **in-memory
+  only** (dirty flag + «Сбросить изменения» re-fetches); deleting a node also drops its
+  channels and its row/column in `traffic.matrix` (helpers `updateNodeAt`/`deleteNodeAt`
+  in `edit-scheme/constants.js`).
 
 Planned:
 - Finish/robustify the backend.
-- Edit-scheme page steps 2+:
-  - select a node by click,
-  - change the type of the selected node,
+- Edit-scheme page steps 3+:
   - add links (channels) between nodes,
-  - save via `POST /update-scheme`,
+  - save via `POST /update-scheme` (wire the dirty state to a «Сохранить» button),
   - redirect from scheme creation to the edit page (instead of showing raw JSON).

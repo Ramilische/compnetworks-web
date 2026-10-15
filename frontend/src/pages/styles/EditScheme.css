@@ -29,13 +29,19 @@
     color: var(--ui-text-muted);
 }
 
-.es-map__svg {
-    display: block;
-    /* Квадратный контейнер: viewBox тоже квадратный — масштаб равномерный */
+.es-map__frame {
+    position: relative;
     width: 100%;
+    /* Квадратная рамка: viewBox карты тоже квадратный — масштаб равномерный */
     max-width: min(100%, 70vh);
     aspect-ratio: 1 / 1;
     margin: 0 auto;
+}
+
+.es-map__svg {
+    display: block;
+    width: 100%;
+    height: 100%;
     background: #f8fafc;
     border: 1px solid var(--ui-border);
     border-radius: var(--ui-radius-sm);
@@ -57,6 +63,66 @@
 .es-map__label {
     fill: var(--ui-text);
     font-weight: 600;
+}
+
+.es-map__node {
+    cursor: pointer;
+}
+
+.es-map__node:hover .es-map__node-circle {
+    filter: brightness(1.08);
+}
+
+.es-map__node--selected .es-map__node-circle {
+    stroke: var(--ui-text);
+    stroke-width: 3;
+}
+
+/* ---------- Контекстное меню узла ---------- */
+
+.es-menu {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 220px;
+    max-width: 260px;
+    padding: 12px;
+    background: var(--ui-card);
+    border: 1px solid var(--ui-border-strong);
+    border-radius: var(--ui-radius-sm);
+    box-shadow: var(--ui-shadow-lg);
+}
+
+.es-menu__title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.es-menu__buttons,
+.es-menu__form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.es-menu__buttons .btn {
+    width: 100%;
+}
+
+.es-menu__row {
+    display: flex;
+    gap: 8px;
+}
+
+.es-menu__row .btn {
+    flex: 1;
+}
+
+.es-menu__confirm {
+    font-size: 13px;
+    color: var(--ui-text-muted);
 }
 
 /* ---------- Адаптив ---------- */

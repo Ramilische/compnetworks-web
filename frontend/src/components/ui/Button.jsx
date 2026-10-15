@@ -2,7 +2,7 @@ import './ui.css';
 
 /**
  * Универсальная кнопка.
- * variant: 'primary' | 'ghost' | 'icon'; type по умолчанию 'button'.
+ * variant: 'primary' | 'ghost' | 'icon' | 'danger'; type по умолчанию 'button'.
  */
 export default function Button({
     variant = 'primary',

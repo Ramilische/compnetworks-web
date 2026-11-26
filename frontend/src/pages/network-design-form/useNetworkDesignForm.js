@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { buildPayload, sendScheme } from './api.js';
 import {
     API_URL,
+    DEFAULT_PACKET_SIZE_KB,
     MAX_CHANNELS,
     MAX_NODES,
     MAX_NODE_TYPES,
@@ -29,6 +30,8 @@ export default function useNetworkDesignForm() {
 
     const [trafficUnit, setTrafficUnit] = useState('Мбит/с');
     const [traffic, setTraffic] = useState({});
+
+    const [packetSizeKb, setPacketSizeKbState] = useState(DEFAULT_PACKET_SIZE_KB.toString());
 
     const [errors, setErrors] = useState({});
     const [payload, setPayload] = useState(null);
@@ -107,6 +110,12 @@ export default function useNetworkDesignForm() {
 
     /* ---------------- ТРАФИК ---------------- */
 
+    const updatePacketSizeKb = (value) => {
+        setPacketSizeKbState(value);
+        setPayload(null);
+        clearError('packetSizeKb');
+    };
+
     const setTrafficValue = (aId, bId, value) => {
         const key = pairKey(aId, bId);
         setTraffic((prev) => ({ ...prev, [key]: value }));
@@ -118,7 +127,7 @@ export default function useNetworkDesignForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const errs = validateForm({ schemeName, nodes, channels, nodeTypes, traffic });
+        const errs = validateForm({ schemeName, nodes, channels, nodeTypes, traffic, packetSizeKb });
         setErrors(errs);
 
         if (Object.keys(errs).length > 0) {
@@ -181,6 +190,8 @@ export default function useNetworkDesignForm() {
         setTrafficValue,
         trafficUnit,
         setTrafficUnit,
+        packetSizeKb,
+        updatePacketSizeKb,
         errors,
         clearError,
         payload,

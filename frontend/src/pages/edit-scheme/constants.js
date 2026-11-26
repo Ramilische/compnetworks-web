@@ -1,4 +1,9 @@
 // Константы и чистые хелперы страницы «Редактирование схемы».
+// Базовый адрес берётся из общей константы формы проектирования,
+// чтобы адрес backend не приходилось дублировать.
+import { API_URL } from '../network-design-form/constants.js';
+
+export const UPDATE_SCHEME_URL = API_URL + 'update-scheme';
 
 // Геометрия карты (в координатах схемы): отступ от краёв, радиус узла
 // и размер подписи — доли размаха координат (масштабируются с данными)
@@ -110,6 +115,34 @@ export function deleteNodeAt(scheme, index) {
 }
 
 /**
+ * Возвращает копию схемы с добавленным каналом между узлами from и to.
+ * typeId — id типа канала (ссылается на channelTypes[].id).
+ * from и to — 0-based индексы в nodes.
+ */
+export function addChannel(scheme, from, to, typeId) {
+    return {
+        ...scheme,
+        channels: [
+            ...(scheme.channels || []),
+            { from, to, typeId },
+        ],
+    };
+}
+
+/**
+ * Возвращает копию схемы без канала между узлами from и to.
+ * Канал ищется в любом направлении (from→to или to→from).
+ */
+export function removeChannel(scheme, from, to) {
+    return {
+        ...scheme,
+        channels: (scheme.channels || []).filter(
+            (c) => !((c.from === from && c.to === to) || (c.from === to && c.to === from))
+        ),
+    };
+}
+
+/**
  * Стиль позиционирования контекстного меню относительно рамки карты:
  * left/top — проценты центра узла, при положении узла у правого/нижнего
  * края меню переворачивается, чтобы не вылезать за рамку.
@@ -123,5 +156,101 @@ export function menuAnchorStyle(layout, point) {
         left: `${left}%`,
         top: `${top}%`,
         transform: `translate(${offsetX}, ${offsetY})`,
+    };
+}
+
+/** Евклидово расстояние между двумя узлами по их координатам. */
+export const nodeDistance = (a, b) => {
+    const dx = coord(a.x) - coord(b.x);
+    const dy = coord(a.y) - coord(b.y);
+    return Math.sqrt(dx * dx + dy * dy);
+};
+
+/**
+ * Minimum Spanning Tree по алгоритму Краскала.
+ * Вершины — узлы схемы, рёбра — все пары узлов, вес — евклидово расстояние.
+ * Возвращает массив рёбер [{ from, to }] (0-based индексы в nodes).
+ */
+export function computeTree(nodes) {
+    const n = nodes.length;
+    if (n < 2) return [];
+
+    // Все рёбра с весами
+    const edges = [];
+    for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+            edges.push({
+                from: i,
+                to: j,
+                weight: nodeDistance(nodes[i], nodes[j]),
+            });
+        }
+    }
+    edges.sort((a, b) => a.weight - b.weight);
+
+    // Union-Find
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const find = (x) => {
+        while (parent[x] !== x) {
+            parent[x] = parent[parent[x]];
+            x = parent[x];
+        }
+        return x;
+    };
+    const union = (a, b) => {
+        const ra = find(a);
+        const rb = find(b);
+        if (ra === rb) return false;
+        parent[rb] = ra;
+        return true;
+    };
+
+    const tree = [];
+    for (const edge of edges) {
+        if (union(edge.from, edge.to)) {
+            tree.push({ from: edge.from, to: edge.to });
+        }
+    }
+    return tree;
+}
+
+/** Возвращает id первого типа узла (тип по умолчанию для новых узлов). */
+export const defaultNodeTypeId = (nodeTypes) =>
+    (nodeTypes || []).length > 0 ? (nodeTypes || [])[0].id : null;
+
+/**
+ * Генерирует следующее доступное имя узла «УК1», «УК2», …
+ */
+export const nextNodeName = (nodes) => {
+    const existing = new Set((nodes || []).map((n) => n.name));
+    let i = 1;
+    while (existing.has(`УК${i}`)) i++;
+    return `УК${i}`;
+};
+
+/**
+ * Возвращает копию схемы с изменённым каналом index
+ * (patch — частичные поля канала: typeId).
+ */
+export function updateChannelAt(scheme, index, patch) {
+    return {
+        ...scheme,
+        channels: scheme.channels.map((c, i) =>
+            i === index ? { ...c, ...patch } : c
+        ),
+    };
+}
+
+/**
+ * Возвращает копию схемы с добавленным узлом.
+ * name — имя узла, x/y — координаты, typeId — id типа узла.
+ */
+export function addNode(scheme, name, x, y, typeId) {
+    return {
+        ...scheme,
+        nodes: [
+            ...(scheme.nodes || []),
+            { name, x, y, typeId },
+        ],
     };
 }

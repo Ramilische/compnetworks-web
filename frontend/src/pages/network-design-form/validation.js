@@ -4,7 +4,7 @@ import { SCHEME_NAME_PATTERN, pairKey } from './constants.js';
  * Проверка формы перед отправкой.
  * Возвращает объект ошибок вида { [ключ]: сообщение }.
  */
-export function validateForm({ schemeName, nodes, channels, nodeTypes, traffic }) {
+export function validateForm({ schemeName, nodes, channels, nodeTypes, traffic, packetSizeKb }) {
     const errs = {};
 
     const name = schemeName.trim();
@@ -37,6 +37,10 @@ export function validateForm({ schemeName, nodes, channels, nodeTypes, traffic }
         if (t.price === '' || Number.isNaN(Number(t.price)) || Number(t.price) < 0)
             errs[`ntype-${i}-price`] = 'Должна быть ≥ 0';
     });
+
+    if (packetSizeKb === '' || Number.isNaN(Number(packetSizeKb)) || Number(packetSizeKb) <= 0) {
+        errs.packetSizeKb = 'Укажите размер пакета > 0 (кБ)';
+    }
 
     for (let i = 0; i < nodes.length; i += 1) {
         for (let j = i + 1; j < nodes.length; j += 1) {

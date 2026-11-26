@@ -6,7 +6,7 @@ import { CREATE_SCHEME_URL, pairKey } from './constants.js';
  * Идентификаторы типов назначаются автоматически: на них ссылаются
  * узлы (nodes[].typeId) и каналы (channels[].typeId).
  */
-export function buildPayload({ schemeName, nodes, channels, nodeTypes, traffic, trafficUnit }) {
+export function buildPayload({ schemeName, nodes, channels, nodeTypes, traffic, trafficUnit, packetSizeKb }) {
     // id типов — последовательные числа 1..N в пределах своего списка
     const nodeTypesWithIds = nodeTypes.map((t, i) => ({
         id: i + 1,
@@ -27,6 +27,7 @@ export function buildPayload({ schemeName, nodes, channels, nodeTypes, traffic, 
 
     return {
         schemeName: schemeName.trim(),
+        packetSizeKb: Number(packetSizeKb),
         nodes: nodes.map((n) => ({
             name: n.name.trim(),
             x: Number(n.x),

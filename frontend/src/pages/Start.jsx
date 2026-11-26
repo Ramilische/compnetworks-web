@@ -16,10 +16,10 @@ function Start() {
 
                 <Actions className="start__actions">
                     <Button onClick={() => navigate('/new-scheme')}>
-                        Создать новую схему
+                        Создать новый проект
                     </Button>
                     <Button variant="ghost" onClick={() => navigate('/choose-scheme')}>
-                        Список схем
+                        Список проектов
                     </Button>
                 </Actions>
             </div>

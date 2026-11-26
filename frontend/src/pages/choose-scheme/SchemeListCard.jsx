@@ -17,7 +17,7 @@ export default function SchemeListCard({
     onRefresh,
 }) {
     const columns = [
-        { key: 'name', title: 'Название схемы' },
+        { key: 'name', title: 'Название схемы', cellClassName: 'cs__name-cell' },
         {
             key: 'action',
             title: '',

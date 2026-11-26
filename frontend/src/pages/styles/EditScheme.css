@@ -3,7 +3,7 @@
    в UI-кит: src/components/ui/ui.css */
 
 .es {
-    max-width: 1100px;
+    min-width: 1200px;
     margin: 0 auto;
     padding: 32px 20px 64px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -47,10 +47,26 @@
     border-radius: var(--ui-radius-sm);
 }
 
+.es-map__link-hitarea {
+    stroke: transparent;
+    stroke-width: 14;
+    vector-effect: non-scaling-stroke;
+}
+
 .es-map__link {
     stroke: var(--ui-border-strong);
     stroke-width: 2;
     vector-effect: non-scaling-stroke;
+}
+
+.es-map__link--selected {
+    stroke: var(--ui-primary);
+    stroke-width: 3;
+}
+
+.es-map__link--selected {
+    stroke: var(--ui-primary);
+    stroke-width: 3;
 }
 
 .es-map__node-circle {
@@ -78,27 +94,14 @@
     stroke-width: 3;
 }
 
+/* Узел-начало при создании канала */
+.es-map__node--channel-start .es-map__node-circle {
+    stroke: var(--ui-success);
+    stroke-width: 3;
+    fill: var(--ui-success);
+}
+
 /* ---------- Контекстное меню узла ---------- */
-
-.es-menu {
-    position: absolute;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-width: 220px;
-    max-width: 260px;
-    padding: 12px;
-    background: var(--ui-card);
-    border: 1px solid var(--ui-border-strong);
-    border-radius: var(--ui-radius-sm);
-    box-shadow: var(--ui-shadow-lg);
-}
-
-.es-menu__title {
-    font-size: 14px;
-    font-weight: 600;
-}
 
 .es-menu__buttons,
 .es-menu__form {
@@ -123,6 +126,64 @@
 .es-menu__confirm {
     font-size: 13px;
     color: var(--ui-text-muted);
+}
+
+/* ---------- Заголовки таблиц ---------- */
+
+.es .ui-table thead th {
+    text-align: center;
+}
+
+/* ---------- Панель инструментов ---------- */
+
+.es-toolbar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ui-border);
+}
+
+.es-toolbar .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.es-toolbar .btn--primary {
+    background: var(--ui-primary);
+    color: #fff;
+    border-color: var(--ui-primary);
+    box-shadow: var(--ui-shadow);
+}
+
+.es-toolbar .btn--primary:hover:not(:disabled) {
+    background: var(--ui-primary-hover);
+    border-color: var(--ui-primary-hover);
+}
+
+.es-toolbar .btn--ghost {
+    color: var(--ui-text);
+}
+
+.es-toolbar .btn--ghost:hover:not(:disabled) {
+    border-color: var(--ui-primary);
+    color: var(--ui-primary);
+    background: #f8fafc;
+}
+
+.es-toolbar svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.es-map__svg--create-node {
+    cursor: crosshair;
 }
 
 /* ---------- Адаптив ---------- */

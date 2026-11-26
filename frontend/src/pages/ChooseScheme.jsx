@@ -31,14 +31,14 @@ export default function ChooseScheme() {
     return (
         <div className="cs">
             <PageHeader
-                title="Выбор схемы"
-                subtitle="Загрузите сохранённую схему компьютерной сети с сервера"
+                title="Выбор проекта"
+                subtitle="Загрузите проект с сервера"
             />
 
             {/* ---------- ОШИБКА СПИСКА ---------- */}
             <Alert>{listError}</Alert>
 
-            {/* ---------- 1. СПИСОК СХЕМ ---------- */}
+            {/* ---------- 1. СПИСОК ПРОЕКТОВ ---------- */}
             <SchemeListCard
                 schemes={schemes}
                 loading={listLoading || schemeLoading}
@@ -49,7 +49,7 @@ export default function ChooseScheme() {
                 onRefresh={reloadList}
             />
 
-            {/* ---------- 2. СОДЕРЖИМОЕ СХЕМЫ ---------- */}
+            {/* ---------- 2. ПРЕЬЮШКА ---------- */}
             <SchemePreviewCard
                 scheme={scheme}
                 loading={schemeLoading}
@@ -59,7 +59,7 @@ export default function ChooseScheme() {
             {/* ---------- ДЕЙСТВИЯ ---------- */}
             <Actions>
                 <Button onClick={() => navigate('/new-scheme')}>
-                    Создать новую схему
+                    Создать новый проект
                 </Button>
                 <Button variant="ghost" onClick={() => navigate('/')}>
                     На главную

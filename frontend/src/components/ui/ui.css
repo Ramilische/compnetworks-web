@@ -1,6 +1,64 @@
 /* ui.css — общий UI-кит сайта: дизайн-токены и стили переиспользуемых
    компонентов из src/components/ui. Подключается каждым компонентом кита. */
 
+/* ui-modal — модальное окно с затемнённым фоном. */
+.ui-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.45);
+    padding: 20px;
+}
+
+.ui-modal {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    background: var(--ui-card);
+    border: 1px solid var(--ui-border-strong);
+    border-radius: var(--ui-radius);
+    box-shadow: var(--ui-shadow-lg);
+}
+
+.ui-modal__title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.ui-modal__actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+/* ui-quickmenu — позиционированное всплывающее меню (popover). */
+.ui-quickmenu {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 220px;
+    max-width: 260px;
+    padding: 12px;
+    background: var(--ui-card);
+    border: 1px solid var(--ui-border-strong);
+    border-radius: var(--ui-radius-sm);
+    box-shadow: var(--ui-shadow-lg);
+}
+
+.ui-quickmenu__title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
 :root {
     --ui-bg: #f5f7fb;
     --ui-card: #ffffff;

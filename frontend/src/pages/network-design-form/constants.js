@@ -28,5 +28,8 @@ export const MAX_NODE_TYPES = 10000;
 // Разрешены только буквы, цифры, пробелы, дефис и подчёркивание
 export const SCHEME_NAME_PATTERN = /^[\p{L}\p{N}\s_-]+$/u;
 
+// Размер пакета для всей сети (кБ) — значение по умолчанию
+export const DEFAULT_PACKET_SIZE_KB = 32;
+
 export const API_URL = 'http://localhost:1234/api/';
 export const CREATE_SCHEME_URL = API_URL + 'create-scheme';

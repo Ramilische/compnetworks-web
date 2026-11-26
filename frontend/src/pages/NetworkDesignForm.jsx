@@ -1,10 +1,11 @@
-import { Actions, Button, PageHeader } from '../components/ui';
+import { Actions, Button, Field, Hint, PageHeader, TextInput } from '../components/ui';
 import ChannelsCard from './network-design-form/ChannelsCard.jsx';
 import FormResult from './network-design-form/FormResult.jsx';
 import NodeTypesCard from './network-design-form/NodeTypesCard.jsx';
 import NodesCard from './network-design-form/NodesCard.jsx';
 import SchemeNameCard from './network-design-form/SchemeNameCard.jsx';
 import TrafficCard from './network-design-form/TrafficCard.jsx';
+import { DEFAULT_PACKET_SIZE_KB } from './network-design-form/constants.js';
 import useNetworkDesignForm from './network-design-form/useNetworkDesignForm.js';
 import './styles/NetworkDesignForm.css';
 
@@ -33,6 +34,8 @@ export default function NetworkDesignForm() {
         setTrafficValue,
         trafficUnit,
         setTrafficUnit,
+        packetSizeKb,
+        updatePacketSizeKb,
         errors,
         clearError,
         payload,
@@ -55,6 +58,18 @@ export default function NetworkDesignForm() {
                 error={errors.schemeName}
                 onChange={updateSchemeName}
             />
+
+            {/* ---------- РАЗМЕР ПАКЕТА ---------- */}
+            <Field label="Размер пакета (кБ)" inline>
+                <TextInput
+                    type="number"
+                    min="1"
+                    value={packetSizeKb}
+                    error={errors.packetSizeKb}
+                    onChange={(e) => updatePacketSizeKb(e.target.value)}
+                />
+            </Field>
+            <Hint>По умолчанию {DEFAULT_PACKET_SIZE_KB} кБ</Hint>
 
             {/* ---------- 1. УЗЛЫ ---------- */}
             <NodesCard
